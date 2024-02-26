@@ -1,0 +1,19 @@
+echo-server:
+  replicas: 1
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      kubernetes.io/ingress.allow-http: "false"
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      traefik.ingress.kubernetes.io/router.tls.options: "default"
+      cert-manager.io/cluster-issuer: lets-encrypt
+    hosts:
+      - host: test1.k01.labs.g-c.dev
+        paths:
+          - /
+    tls:
+      - secretName: echo-server-certificate
+        hosts:
+          - test1.k01.labs.g-c.dev
